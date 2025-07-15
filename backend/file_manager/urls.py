@@ -1,10 +1,12 @@
-from django.contrib import admin
 from django.urls import path, include
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from file_manager import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/', include('api.urls')),
+    path('', views.homepage, name='home'),  # 实际路径：/filemanager/
+
+    # 子应用专属路由
+    # path('dashboard/', views.dashboard, name='dashboard'),  # 实际路径：/filemanager/dashboard/
+    path('operation/', include('operations.urls')),  # 实际路径：/filemanager/operation/
+    path('scanner/', include('scanner.urls')),  # 实际路径：/filemanager/scanner/
+
 ]

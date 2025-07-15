@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'scanner',
     'operations',
     'api',
+    'file_manager'
 ]
 
 MIDDLEWARE = [
@@ -33,7 +34,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'file_manager.urls'
+ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
     {
@@ -51,15 +52,15 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'file_manager.wsgi.application'
+WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'file_system_db',
-        'USER': 'fileadmin',
-        'PASSWORD': 'securepass',
-        'HOST': 'localhost',
+        'NAME': 'file_tree_Meta',
+        'USER': 'root',
+        'PASSWORD': 'Ict@123',
+        'HOST': '8.133.195.34',
         'PORT': '3306',
     }
 }
