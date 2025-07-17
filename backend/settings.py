@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 
 SECRET_KEY = 'django-insecure-^0&g7$@r!e%5$*#0vz^7e2qk6$9)3p4r5t6y7u8i9o0p1a2s3d4f'
 DEBUG = True
@@ -17,10 +17,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'backend.scanner.apps.ScannerConfig',
-    'backend.operations.apps.OperationsConfig',
-    'backend.api.apps.ApiConfig',
-    'backend.file_manager.apps.FileManagerConfig'
+    'scanner.apps.ScannerConfig',
+    'operations.apps.OperationsConfig',
+    'api.apps.ApiConfig',
+    'file_manager.apps.FileManagerConfig'
 ]
 
 MIDDLEWARE = [
@@ -34,7 +34,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'backend.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {
@@ -52,7 +52,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'backend.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 DATABASES = {
     'default': {
@@ -105,5 +105,5 @@ CORS_ALLOW_CREDENTIALS = True
 
 # 文件系统配置
 # DEFAULT_SCAN_ROOT = os.path.join(os.path.expanduser('~'), 'Documents')
-DEFAULT_SCAN_ROOT = os.path.join('/Users/lijunma/Documents/GitHub/file-batch-manager/backend')
+DEFAULT_SCAN_ROOT = Path(__file__).resolve().parent
 SCAN_HIDDEN = False

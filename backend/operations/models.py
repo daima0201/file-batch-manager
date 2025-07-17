@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from backend.scanner.models import FileTree
 
 User = get_user_model()
 
