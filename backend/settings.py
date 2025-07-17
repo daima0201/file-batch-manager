@@ -17,10 +17,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'scanner',
-    'operations',
-    'api',
-    'file_manager'
+    'backend.scanner.apps.ScannerConfig',
+    'backend.operations.apps.OperationsConfig',
+    'backend.api.apps.ApiConfig',
+    'backend.file_manager.apps.FileManagerConfig'
 ]
 
 MIDDLEWARE = [
@@ -57,7 +57,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'file_tree_Meta',
+        'NAME': 'file_tree_meta',
         'USER': 'root',
         'PASSWORD': 'Ict@123',
         'HOST': '8.133.195.34',
@@ -104,5 +104,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 # 文件系统配置
-DEFAULT_SCAN_ROOT = os.path.join(os.path.expanduser('~'), 'Documents')
+# DEFAULT_SCAN_ROOT = os.path.join(os.path.expanduser('~'), 'Documents')
+DEFAULT_SCAN_ROOT = os.path.join('/Users/lijunma/Documents/GitHub/file-batch-manager/backend')
 SCAN_HIDDEN = False

@@ -15,3 +15,5 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 
 # 获取 WSGI 应用对象
 application = get_wsgi_application()
+
+print(application)

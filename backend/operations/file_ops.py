@@ -1,7 +1,7 @@
 import os
 import shutil
 from django.conf import settings
-from scanner.models import FileTree
+from backend.scanner.models import FileTree
 from .models import OperationLog
 
 

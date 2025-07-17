@@ -1,11 +1,12 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from operations.models import OperationLog
+from rest_framework.permissions import AllowAny
+from backend.operations.models import OperationLog
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from scanner.models import FileTree
-
+from backend.scanner.models import FileTree
+from rest_framework.views import APIView
 from .serializers import FileTreeSerializer, OperationLogSerializer
 
 User = get_user_model()
@@ -43,7 +44,7 @@ class OperationLogViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class ScanViewSet(viewsets.ViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def create(self, request):
         root_path = request.data.get('root_path', None)
@@ -100,3 +101,20 @@ class FileOperationViewSet(viewsets.ViewSet):
             'status': 'success' if success else 'error',
             'message': message
         })
+
+
+class RegisterView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        if not username or not password:
+            return Response({'error': 'Username and password are required'}, status=400)
+
+        if User.objects.filter(username=username).exists():
+            return Response({'error': 'Username already exists'}, status=400)
+
+        user = User.objects.create_user(username=username, password=password)
+        return Response({'message': 'User created successfully'}, status=201)
