@@ -1,28 +1,8 @@
 import axios from 'axios'
-import store from '@/store'
 
-const api = axios.create({
-  baseURL: process.env.VUE_APP_API_BASE_URL || 'http://localhost:8000/api/',
-  timeout: 10000
-})
+const API_BASE = '/api';
+const FILE_MANAGER_BASE = '/file_manager';
 
-api.interceptors.request.use(config => {
-  const token = store.state.auth.token
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
-  return config
-}, error => {
-  return Promise.reject(error)
-})
-
-api.interceptors.response.use(response => {
-  return response
-}, error => {
-  if (error.response && error.response.status === 401) {
-    store.dispatch('auth/logout')
-  }
-  return Promise.reject(error)
-})
-
-export default api
+export const triggerScan = () => axios.post(`${FILE_MANAGER_BASE}/scan/`);
+export const fetchScanStatus = () => axios.get(`${FILE_MANAGER_BASE}/status/`);
+export const fetchScanResults = () => axios.get(`${FILE_MANAGER_BASE}/results/`);

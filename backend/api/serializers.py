@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
-from operations.models import OperationLog
 from rest_framework import serializers
-from scanner.models import FileTree
+from backend.scanner.models import FileTree
+from backend.operations.models import OperationLog
 
 User = get_user_model()
 

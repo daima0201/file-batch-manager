@@ -1,7 +1,28 @@
 import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "backend/static",  # 用于前端构建后的文件
+]
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'backend/templates')],  # 用于前端构建后的模板
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 SECRET_KEY = 'django-insecure-^0&g7$@r!e%5$*#0vz^7e2qk6$9)3p4r5t6y7u8i9o0p1a2s3d4f'
 DEBUG = True
@@ -17,10 +38,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'scanner.apps.ScannerConfig',
-    'operations.apps.OperationsConfig',
-    'api.apps.ApiConfig',
-    'file_manager.apps.FileManagerConfig'
+    'backend.scanner.apps.ScannerConfig',
+    'backend.operations.apps.OperationsConfig',
+    'backend.api.apps.ApiConfig',
+    'backend.file_manager.apps.FileManagerConfig'
 ]
 
 MIDDLEWARE = [
@@ -34,25 +55,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'backend.urls'
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-
-WSGI_APPLICATION = 'wsgi.application'
+WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
@@ -86,8 +91,6 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-STATIC_URL = '/static/'
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
@@ -105,5 +108,5 @@ CORS_ALLOW_CREDENTIALS = True
 
 # 文件系统配置
 # DEFAULT_SCAN_ROOT = os.path.join(os.path.expanduser('~'), 'Documents')
-DEFAULT_SCAN_ROOT = Path(__file__).resolve().parent
+DEFAULT_SCAN_ROOT = Path(__file__).resolve().parent.parent
 SCAN_HIDDEN = False

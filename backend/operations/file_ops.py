@@ -1,6 +1,6 @@
 import os
 import shutil
-from scanner.models import FileTree
+from backend.scanner.models import FileTree
 from .models import OperationLog
 
 

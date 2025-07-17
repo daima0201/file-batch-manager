@@ -1,13 +1,15 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import AllowAny
-from operations.models import OperationLog
+from backend.operations.models import OperationLog
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from scanner.models import FileTree
+from backend.scanner.models import FileTree
 from rest_framework.views import APIView
 from .serializers import FileTreeSerializer, OperationLogSerializer
+from backend.operations.file_ops import delete_files, move_files, rename_file
+from backend.scanner.tasks import scan_directory
 
 User = get_user_model()
 
@@ -50,7 +52,6 @@ class ScanViewSet(viewsets.ViewSet):
         root_path = request.data.get('root_path', None)
         scan_hidden = request.data.get('scan_hidden', False)
 
-        from scanner.tasks import scan_directory
         try:
             scan_directory(root_path, scan_hidden)
             # 记录操作日志
@@ -71,7 +72,6 @@ class FileOperationViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['post'])
     def delete_files(self, request):
         file_ids = request.data.get('file_ids', [])
-        from operations import delete_files
         deleted, errors = delete_files(file_ids, request.user)
         return Response({
             'status': 'success',
@@ -83,7 +83,6 @@ class FileOperationViewSet(viewsets.ViewSet):
     def move_files(self, request):
         file_ids = request.data.get('file_ids', [])
         target_dir = request.data.get('target_dir', '')
-        from operations import move_files
         moved, errors = move_files(file_ids, target_dir, request.user)
         return Response({
             'status': 'success',
@@ -95,7 +94,6 @@ class FileOperationViewSet(viewsets.ViewSet):
     def rename_file(self, request):
         file_id = request.data.get('file_id')
         new_name = request.data.get('new_name')
-        from operations import rename_file
         success, message = rename_file(file_id, new_name, request.user)
         return Response({
             'status': 'success' if success else 'error',

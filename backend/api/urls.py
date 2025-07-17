@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
-from . import views
+from backend.api import views
 
 router = routers.DefaultRouter()
 router.register(r'files', views.FileTreeViewSet, basename='filetree')

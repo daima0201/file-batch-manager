@@ -1,9 +1,9 @@
 import os
 import datetime
 from django.conf import settings
-from utils.path_utils import generate_path_hash
-from scanner.models import FileTree
-from utils.time_utils import safe_aware
+from backend.utils.path_utils import generate_path_hash
+from backend.scanner.models import FileTree
+from backend.utils.time_utils import safe_aware
 
 
 def scan_directory(root_path=None, scan_hidden=False):
